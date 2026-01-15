@@ -1,56 +1,201 @@
-# {{crew_name}} Crew
 
-Welcome to the {{crew_name}} Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+# Agentic Notebook-LM (CrewAI)
+An advanced multi-agent system designed to mimic the functionality of Google's NotebookLM11. This application ingests heterogeneous data sources—including YouTube videos, web articles, arXiv research papers, and local documents—to synthesize them into a structured, beginner-friendly Markdown guide2222.
++1
 
-## Installation
+🚀 Overview
+The system utilizes CrewAI Flows to orchestrate two distinct crews through a state-managed pipeline3:
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+Research Crew (Hierarchical): A manager-led team that extracts and synthesizes raw data from various URLs and files4444.
++2
 
-First, if you haven't already, install uv:
+Writer Crew (Sequential): A linear pipeline that transforms dense research into a polished, educational "Getting Started" guide5555.
++3
+
+🏗️ Architecture Flow
+The application logic is divided into three primary phases managed by a Pydantic-based state666:
++1
+
+Phase 1: Research Node: Triggered by raw user inputs. The Research Manager analyzes the URLs and delegates tasks to specialists (YouTube, Web, Arxiv, or Document)7777.
++1
+
+Phase 2: Transition: Compiled research data (minimum 5000 words) is passed to the Writing state8888.
++1
+
+Phase 3: Writing Node: The Technical Writer drafts the guide, and the Content Editor performs a final quality assurance check9999.
++1
+
+🤖 The Crews
+
+1. Research Crew (Hierarchical Process)
+Coordinated by a Research Manager who ensures thorough coverage without losing technical details10.
+
+YouTube Specialist: Uses YoutubeVideoSearchTool and YoutubeChannelSearchTool to analyze transcripts111111.
++1
+
+Web Specialist: Employs ScrapeWebsiteTool and SeleniumScrapingTool for static and dynamic web content12121212.
++1
+
+Arxiv Specialist: Analyzes academic papers using ArxivPaperTool1313131313.
++3
+
+Document Specialist: Processes PDFs, Text, and Markdown files using semantic search141414141414141414.
++2
+
+2. Writer Crew (Sequential Process)
+Transforms complex findings into an accessible format15151515.
++1
+
+Technical Writer: Focuses on beginner-friendly language, analogies, and line-by-line code explanations16161616.
++1
+
+Content Editor: Reviews the guide for clarity, technical accuracy, and tone consistency17171717.
++1
+
+🛠️ Technical Setup
+Prerequisites
+Python 3.10+
+[CrewAI](https://crewai.com)
+An OpenAI API Key (configured as manager_llm) 18
+
+Installation
+Clone the repository:
+Bash
+git clone [https://github.com/your-username/agentic-notebook-lm.git](https://github.com/your-username/agentic-notebook-lm.git)
+cd agentic-notebook-lm
+
+Install dependencies:
+Using uv as specified in the project19:
+Bash
+crewai install
+uv add selenium webdriver-manager
+
+Activate environment:
+Bash
+source .venv/bin/activate
+
+💻 Usage
+Run the flow via the interactive terminal interface20:
+
+Bash
+python src/guide_generator_flow/main.py
+
+You will be prompted to provide optional links for21:
+
+YouTube Videos/Channels
+Web Articles/Documentation
+arXiv Paper IDs or Titles
+Local file paths (PDF/TXT/MD)
+The final output will be saved as ./outputs/getting_started_guide.md22.
+
+📂 File Structure
+
+src/guide_generator_flow/crews/research_crew/: Configs and logic for the Research phase23.
+
+src/guide_generator_flow/crews/writing_crew/: Configs and logic for the Writing phase24.
+
+src/guide_generator_flow/main.py: The CrewAI Flow orchestration and state management25.
+
+Agentic Notebook-LM (CrewAI)
+=============================
+
+An advanced multi-agent system designed to mimic the functionality of Google's NotebookLM. This application ingests heterogeneous data sources—including YouTube videos, web articles, arXiv research papers, and local documents—to synthesize them into a structured, beginner-friendly Markdown guide.
+
+🚀 Overview
+-----------
+
+The system utilizes CrewAI Flows to orchestrate two distinct crews through a state-managed pipeline:
+
+- **Research Crew (Hierarchical)**: A manager-led team that extracts and synthesizes raw data from various URLs and files.
+- **Writer Crew (Sequential)**: A linear pipeline that transforms dense research into a polished, educational "Getting Started" guide.
+
+🏗️ Architecture Flow
+---------------------
+
+The application logic is divided into three primary phases managed by a Pydantic-based state:
+
+- **Phase 1: Research Node**: Triggered by raw user inputs. The Research Manager analyzes the URLs and delegates tasks to specialists (YouTube, Web, Arxiv, or Document).
+- **Phase 2: Transition**: Compiled research data (minimum 5000 words) is passed to the Writing state.
+- **Phase 3: Writing Node**: The Technical Writer drafts the guide, and the Content Editor performs a final quality assurance check.
+
+🤖 The Crews
+------------
+
+### 1. Research Crew (Hierarchical Process)
+
+Coordinated by a Research Manager who ensures thorough coverage without losing technical details.
+
+- **YouTube Specialist**: Uses `YoutubeVideoSearchTool` and `YoutubeChannelSearchTool` to analyze transcripts.
+- **Web Specialist**: Employs `ScrapeWebsiteTool` and `SeleniumScrapingTool` for static and dynamic web content.
+- **Arxiv Specialist**: Analyzes academic papers using `ArxivPaperTool`.
+- **Document Specialist**: Processes PDFs, text, and Markdown files using semantic search.
+
+
+### 2. Writer Crew (Sequential Process)
+
+Transforms complex findings into an accessible format.
+
+- **Technical Writer**: Focuses on beginner-friendly language, analogies, and line-by-line code explanations.
+- **Content Editor**: Reviews the guide for clarity, technical accuracy, and tone consistency.
+
+🛠️ Technical Setup
+-------------------
+
+### Prerequisites
+
+- Python 3.10+
+- [CrewAI](https://crewai.com)
+- An OpenAI API Key (configured as `manager_llm`)
+
+
+### Installation
+
+Clone the repository:
 
 ```bash
-pip install uv
+git clone https://github.com/your-username/agentic-notebook-lm.git
+cd agentic-notebook-lm
 ```
 
-Next, navigate to your project directory and install the dependencies:
+Install dependencies (using `uv` as specified in the project):
 
-(Optional) Lock the dependencies and install them by using the CLI command:
 ```bash
 crewai install
+uv add selenium webdriver-manager
 ```
 
-### Customizing
-
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/guide_generator_flow/config/agents.yaml` to define your agents
-- Modify `src/guide_generator_flow/config/tasks.yaml` to define your tasks
-- Modify `src/guide_generator_flow/crew.py` to add your own logic, tools and specific args
-- Modify `src/guide_generator_flow/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your flow and begin execution, run this from the root folder of your project:
+Activate environment:
 
 ```bash
-crewai run
+source .venv/bin/activate
 ```
 
-This command initializes the guide_generator_flow Flow as defined in your configuration.
+💻 Usage
+--------
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+Run the flow via the interactive terminal interface:
 
-## Understanding Your Crew
+```bash
+python src/guide_generator_flow/main.py
+```
 
-The guide_generator_flow Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+You will be prompted to provide optional links for:
 
-## Support
+- YouTube videos/channels
+- Web articles/documentation
+- arXiv paper IDs or titles
+- Local file paths (PDF/TXT/MD)
 
-For support, questions, or feedback regarding the {{crew_name}} Crew or crewAI.
+The final output will be saved as:
 
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+```text
+./outputs/getting_started_guide.md
+```
 
-Let's create wonders together with the power and simplicity of crewAI.
+📂 File Structure
+-----------------
+
+- `src/guide_generator_flow/crews/research_crew/`: Configs and logic for the Research phase.
+- `src/guide_generator_flow/crews/writing_crew/`: Configs and logic for the Writing phase.
+- `src/guide_generator_flow/main.py`: The CrewAI Flow orchestration and state management.
+
